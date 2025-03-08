@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_db
 <<<<<<< HEAD
-from models.task import Task as TaskModel  # مدل تسک از SQLAlchemy را وارد می‌کنیم
+from models.task import Task as TaskModel  
 from pydantic import BaseModel
 from fastapi import Depends
 
