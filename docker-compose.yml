@@ -1,6 +1,10 @@
 services:
   db:
+<<<<<<< HEAD
     image: postgres:13
+=======
+    image: postgres:13 
+>>>>>>> 5a4d977 (Updated README and finalized project)
     environment:
       POSTGRES_USER: AmirRzn
       POSTGRES_PASSWORD: Amir1380

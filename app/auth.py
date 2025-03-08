@@ -8,7 +8,11 @@ from app.database import get_db
 
 router = APIRouter()
 
+<<<<<<< HEAD
 SECRET_KEY = "example"
+=======
+SECRET_KEY = "your secret key"
+>>>>>>> 5a4d977 (Updated README and finalized project)
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -24,7 +28,10 @@ class UserLogin(BaseModel):
     username: str
     password: str
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5a4d977 (Updated README and finalized project)
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
     expire = datetime.utcnow() + (expires_delta if expires_delta else timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
