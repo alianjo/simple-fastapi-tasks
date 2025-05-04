@@ -5,4 +5,12 @@ class UserIn(BaseModel):
     password: str
 
 class UserOut(BaseModel):
-    username: str  
+    username: str
+
+class TaskOut(BaseModel):
+    id: int
+    title: str
+    description: str
+
+    class Config:
+        orm_mode = True  
