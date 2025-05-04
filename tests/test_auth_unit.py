@@ -31,3 +31,4 @@ def test_verify_invalid_token():
     invalid_token = "this.is.not.valid"
     payload = verify_token(invalid_token)
     assert payload is None
+
