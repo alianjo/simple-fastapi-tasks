@@ -8,7 +8,7 @@ from app.database import get_db
 
 router = APIRouter()
 
-SECRET_KEY = "example"
+SECRET_KEY = "your secret key"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -23,7 +23,6 @@ class UserCreate(BaseModel):
 class UserLogin(BaseModel):
     username: str
     password: str
-
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
@@ -59,4 +58,4 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Invalid username or password")
     
     access_token = create_access_token(data={"sub": user.username}, expires_delta=timedelta(minutes=30))
-    return {"access_token": access_token, "token_type": "bearer"}  
+    return {"access_token": access_token, "token_type": "bearer"}   
