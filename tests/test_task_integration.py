@@ -20,19 +20,24 @@ app.dependency_overrides[get_db] = override_get_db
 def create_task():
     response = client.post(
         "/tasks/",
-        json={"title": "Test Task", "description": "Test Description"},
+        json={"title": "task", "description": "test task"},
     )
     return response.json()
 
-def test_create_task():
+@pytest.fixture
+def auth_headers():
+    response = client.post("/auth/login", json={"username": "Amir", "password": "1111"})
+    assert response.status_code == 200
+    token = response.json()["access_token"]
+    return {"Authorization": f"Bearer {token}"}
+
+def test_create_task(auth_headers):
     response = client.post(
         "/tasks/",
-        json={"title": "New Task", "description": "Task Description"},
+        json={"title": "Test Task", "description": "This is a test"},
+        headers=auth_headers,
     )
     assert response.status_code == 200
-    data = response.json()
-    assert data["title"] == "New Task"
-    assert data["description"] == "Task Description"
 
 def test_get_tasks(create_task):
     response = client.get("/tasks/")

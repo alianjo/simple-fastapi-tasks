@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from fastapi import Depends
 from sqlalchemy.future import select
 from models.models import TaskOut
+from app.auth import get_current_user
 
 class TaskCreate(BaseModel):
     title: str
@@ -29,6 +30,30 @@ class Task(BaseModel):
 router = APIRouter()
 
 @router.post("/", response_model=Task)
+async def create_task(
+    task: TaskCreate,
+    db: AsyncSession = Depends(get_db),
+    current_user: str = Depends(get_current_user),  # Require authentication
+):
+    try:
+        db_task = TaskModel(title=task.title, description=task.description)
+        db.add(db_task)
+        await db.commit()
+        await db.refresh(db_task)
+        return db_task
+    except Exception as e:
+        print("Error saving task:", e)
+        raise HTTPException(status_code=500, detail="Failed to save task")
+
+@router.get("/", response_model=list[TaskOut])
+async def get_tasks(
+    db: AsyncSession = Depends(get_db),
+    current_user: str = Depends(get_current_user),  # Require authentication
+):
+    result = await db.execute(select(TaskModel))
+    tasks = result.scalars().all()
+    return tasks
+
 async def create_task(task: TaskCreate, db: AsyncSession = Depends(get_db)):
     db_task = TaskModel(title=task.title, description=task.description)
     db.add(db_task)

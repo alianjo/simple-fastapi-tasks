@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 
 DATABASE_URL = "postgresql+asyncpg://AmirRzn:Amir1380@db:5432/tasks_db"
 
@@ -15,4 +15,4 @@ async def get_db():
 
 async def create_tables():
     async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all) 
+        await conn.run_sync(Base.metadata.create_all)
